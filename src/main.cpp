@@ -201,7 +201,10 @@ void wifi_manager() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("JC Design\nPD-01RGB-WIFI1\nStart program...");
+  delay(1000);
+  Serial.println("JC Design");
+  Serial.println("PD-01RGB-WIFI1");
+  Serial.println("Start program...");
   pinMode(ledPin.red, OUTPUT);
   pinMode(ledPin.green, OUTPUT);
   pinMode(ledPin.blue, OUTPUT);
