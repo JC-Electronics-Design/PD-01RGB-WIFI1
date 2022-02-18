@@ -1,5 +1,5 @@
 /*
- * PD-01RGB-WIFI1 Software version v1.0
+ * PD-01RGB-WIFI1 Software version v2.0
  * JC Design 
  */
 #include <FS.h>                   //this needs to be first, or it all crashes and burns...
@@ -8,7 +8,6 @@
 #include <ArduinoJson.h>          //https://github.com/bblanchon/ArduinoJson
 
 #include <MQTTClient.h>
-#include <HSBColor.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
@@ -59,13 +58,6 @@ OneWire ds(TEMP_PIN);                    //DS18b20 on gpio4
 DallasTemperature dsTemp(&ds);
 bool start = true;
 unsigned long Lasttime = 0;
-
-// bool offline = false;
-// int counter = 0;
-// long last_client_millis = 0;
-
-// #define WIFI_DELAY 2000
-// #define CLIENT_DELAY  2000      //time in milliseconds
 
 // LED output variables
 struct LedPin {
@@ -354,6 +346,7 @@ void handleWifiManager(bool autoconnect) {
   wm.setSaveConfigCallback(saveConfigCallback);
 
   // create parameters
+  WiFiManagerParameter custom_setup_header("<h1>Setup Parameters</h1>");
   WiFiManagerParameter custom_mqtt_server_ip("mqtt_server_ip", "MQTT server ip (max. 60 characters)", mqtt_server_ip, 60);
   WiFiManagerParameter custom_mqtt_port("mqtt_port", "MQTT port (max. 6 characters)", mqtt_port, 6);
   WiFiManagerParameter custom_mqtt_device_id("mqtt_device_id", "MQTT device id (max. 60 characters)", mqtt_device_id, 60);
@@ -382,6 +375,7 @@ void handleWifiManager(bool autoconnect) {
   wm.setSTAStaticIPConfig(_ip, _gw, _sn);
 
   //add parameters
+  wm.addParameter(&custom_setup_header);
   wm.addParameter(&custom_mqtt_server_ip);
   wm.addParameter(&custom_mqtt_port);
   wm.addParameter(&custom_mqtt_device_id);
@@ -468,37 +462,23 @@ void messageReceived(String &topic, String &payload) {
       #endif
     }
     else {
+      //Convert R,G,B values to individual values
       int firstComma = msgString.indexOf(',') + 1;                  //find first comma in string
       int secondComma = msgString.indexOf(',', firstComma + 1);     //find second comma in string
       int thirdComma = msgString.indexOf(',', secondComma + 1);     //find third comma in string
-      String hue = msgString.substring(0, (firstComma - 1));
-      String saturation = msgString.substring(firstComma, secondComma);
-      String brightness = msgString.substring((secondComma+1), thirdComma);
+      String red = msgString.substring(0, (firstComma - 1));
+      String green = msgString.substring(firstComma, secondComma);
+      String blue = msgString.substring((secondComma+1), thirdComma); 
 
       #ifdef SERIAL_DEBUG
-        Serial.print(hue); Serial.print(",");
-        Serial.print(saturation); Serial.print(",");
-        Serial.println(brightness);
+        Serial.print(red); Serial.print(",");
+        Serial.print(green); Serial.print(",");
+        Serial.println(blue);
       #endif
-    
-      H2R_HSBtoRGB(hue.toInt(), saturation.toInt(), brightness.toInt(), LedValue);
 
-      LedValue[0] = (LedValue[0]*4)+3;
-      LedValue[1] = (LedValue[1]*4)+3;
-      LedValue[2] = (LedValue[2]*4)+3;
-      
-      if(LedValue[0] < 100)
-        LedValue[0] = 0;
-      else if(LedValue[0] > 980)
-        LedValue[0] = 1023;
-      if(LedValue[1] < 100)
-        LedValue[1] = 0;
-      else if(LedValue[1] > 980)
-        LedValue[1] = 1023;
-      if(LedValue[2] < 100)
-        LedValue[2] = 0;
-      else if(LedValue[2] > 980)
-        LedValue[2] = 1023;
+      LedValue[0] = map(red.toInt(), 0, 250, 0, 1023);
+      LedValue[1] = map(green.toInt(), 0, 250, 0, 1023);
+      LedValue[2] = map(blue.toInt(), 0, 250, 0, 1023);
 
       #ifdef SERIAL_DEBUG
         Serial.print(LedValue[0]); Serial.print(",");
@@ -512,35 +492,6 @@ void messageReceived(String &topic, String &payload) {
     }
   }
 }
-
-// void wifi_handler() {
-//   if(WiFi.status() != WL_CONNECTED || !client.connected()) {
-//     #ifdef SERIAL_DEBUG
-//       Serial.print("wifi: "); Serial.println(WiFi.status());      //Keep the serial, otherwise it doesn't work (too fast)
-//       Serial.print("Counter: ");  Serial.println(counter);
-//     #endif
-//     if(!offline) {
-//       offline = true;
-//     }
-//     if((counter > WIFI_DELAY || counter == 0) && WiFi.status() != WL_CONNECTED) {
-//       connect();
-//       counter = 1;
-//     }
-//     counter++;
-//   }
-//   if(offline && WiFi.status() == WL_CONNECTED && ((millis() - last_client_millis) > CLIENT_DELAY)) {
-//     Serial.println("check client..........................");
-//     if(client.connect(mqttDeviceID)) {
-//       offline = false;
-//       counter = 0;
-//       OTA_init();
-//       client.subscribe(subscribeTopic1);
-//       client.subscribe(subscribeTopic2);
-//       Serial.println("Connected!");
-//     }
-//     last_client_millis = millis();
-//   }
-// }
 
 void reconnect() {
   // Loop until we're reconnected
