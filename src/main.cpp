@@ -81,7 +81,7 @@ void loadConfig();
 void saveConfig();
 void handleWifiManager(bool autoconnect);
 void messageReceived(String &topic, String &payload);
-void reconnect();
+void reconnect(bool fromConfigPortal);
 
 void setup() {
   #ifdef SERIAL_DEBUG
@@ -126,7 +126,7 @@ void loop() {
 
   if(!client.connected()) {
     mqtt_connected = false;
-    reconnect();
+    reconnect(false);
   } 
   
   if(mqtt_connected) {
@@ -179,8 +179,13 @@ void loop() {
     //Save config parameters into config file
     saveConfig();
 
+    client.begin(mqtt_server_ip, net);
+    client.onMessage(messageReceived);
+
+    reconnect(true);
+
     #ifdef SERIAL_DEBUG
-      Serial.println("Exit On Demand AP...");
+      Serial.println("\nExit On Demand AP...");
     #endif
   }
 }
@@ -489,15 +494,13 @@ void messageReceived(String &topic, String &payload) {
   }
 }
 
-void reconnect() {
+void reconnect(bool fromConfigPortal) {
   // Loop until we're reconnected
-  if(!client.connected() && ((millis() - last_client_connect) > client_connect_delay)) {
+  if(((millis() - last_client_connect) > client_connect_delay) || fromConfigPortal) {
     #ifdef SERIAL_DEBUG
       Serial.print("\nAttempting MQTT connection...");
     #endif
     // Attempt to connect
-    // If you do not want to use a username and password, change next line to
-    // if (client.connect("ESP8266Client")) {
     if(client.connect(mqtt_device_id)) {
       client.subscribe(rgb_topic);
       mqtt_connected = true;
