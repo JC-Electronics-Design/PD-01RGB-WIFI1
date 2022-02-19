@@ -60,6 +60,8 @@ bool start = true;
 unsigned long Lasttime = 0;
 
 // LED output variables
+#define PWM_RANGE 250                    //default pwm range is 0-255, changed to 0-250
+#define PWM_FREQUENCY 30000               //100 - 40000Hz
 struct LedPin {
   byte red;
   byte green;
@@ -94,6 +96,9 @@ void setup() {
   pinMode(ledPin.blue, OUTPUT);
   pinMode(builtin_led, OUTPUT);
   pinMode(TEMP_PIN, INPUT);
+
+  analogWriteRange(PWM_RANGE);
+  analogWriteFreq(PWM_FREQUENCY);
   
   analogWrite(ledPin.red, 0);
   analogWrite(ledPin.green, 0);
@@ -463,22 +468,13 @@ void messageReceived(String &topic, String &payload) {
     }
     else {
       //Convert R,G,B values to individual values
-      int firstComma = msgString.indexOf(',') + 1;                  //find first comma in string
+      int firstComma = msgString.indexOf(',');                  //find first comma in string
       int secondComma = msgString.indexOf(',', firstComma + 1);     //find second comma in string
       int thirdComma = msgString.indexOf(',', secondComma + 1);     //find third comma in string
-      String red = msgString.substring(0, (firstComma - 1));
-      String green = msgString.substring(firstComma, secondComma);
-      String blue = msgString.substring((secondComma+1), thirdComma); 
 
-      #ifdef SERIAL_DEBUG
-        Serial.print(red); Serial.print(",");
-        Serial.print(green); Serial.print(",");
-        Serial.println(blue);
-      #endif
-
-      LedValue[0] = map(red.toInt(), 0, 250, 0, 1023);
-      LedValue[1] = map(green.toInt(), 0, 250, 0, 1023);
-      LedValue[2] = map(blue.toInt(), 0, 250, 0, 1023);
+      LedValue[0] = msgString.substring(0, firstComma).toInt();
+      LedValue[1] = msgString.substring(firstComma + 1, secondComma).toInt();
+      LedValue[2] = msgString.substring(secondComma + 1, thirdComma).toInt();
 
       #ifdef SERIAL_DEBUG
         Serial.print(LedValue[0]); Serial.print(",");
