@@ -41,6 +41,6 @@ The last step in the config portal is to configure your WiFi network. Click `Con
 Here click on the network SSID you want the ESP8266 to connect to. This will copy the SSID to the SSID parameter below. After that fill in the password for this network. At last configure the static ip, static gateway ip and subnet mask you want to use. Now click the `Save` button to save the parameters and start connecting to the WiFi network. Once the ESP8266 is able to connect to the WiFi network the config portal will be closed and the device is ready to be used. Bare in mind that closing the config portal may take a few seconds. 
 
 ## FYI
+- When the device is connected to your WiFi network and is in normal operation, you can access the config portal by pressing the GPIO0 button on the PCB. This will initiate AP mode so you are able to connect to it and open the config portal. 
 - If you want to use the software on a selfmade PCB or for something else this can also be done. Just keep in mind that you might have to remap the pins to what you are using for your design. 
-
 - PD-01RGB-WIFI1 is the internal reference I use for this product.
