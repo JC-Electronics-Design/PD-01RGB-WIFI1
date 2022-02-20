@@ -9,7 +9,7 @@ This firmware is developed to be used in combination with IoT RGB LED Controller
 <a href="https://github.com/JC-Electronics-Design/PD-01RGB-WIFI1/releases/tag/v2.1">Current stable version of the software is v2.1.</a>
 
 ## Setup
-In case you bought the controller from my Tindie store the latest software is already preloaded onto the board. The only thing you have to do is connect your LED strip, connect the touch button (if your using it) and plug in the power cable. Below is an image with some indications on what is what. 
+In case you bought the controller from my Tindie store the latest software is already preloaded onto the board. The only thing you have to do is connect your LED strip, connect the touch button (if your using it) and plug in the power cable. Below is an image with some indications on what is what. On the bottom of the PCB there are labels for each pin.
 
 <img src="https://user-images.githubusercontent.com/34834753/154841525-c9ffe404-0397-4101-a4a5-aee859897f2b.jpg" width="750">
 
