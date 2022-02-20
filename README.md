@@ -47,6 +47,6 @@ Here click on the network SSID you want the ESP8266 to connect to. This will cop
 - PD-01RGB-WIFI1 is the internal reference I use for this product.
 
 ## Enclosure
-There are <a href="https://www.thingiverse.com/thing:5255430">stl files</a> available on Thingiverse for a 3D printed enclosure. The left one is for use with an internal touch button. The right one is for use with an external touch button.
+There are <a href="https://www.thingiverse.com/thing:5255430">stl files</a> available on Thingiverse for a 3D printed enclosure. The first one is for use with an internal touch button. The second is for use with an external touch button.
 
 <img src="https://user-images.githubusercontent.com/34834753/154859582-9141cc98-ce4c-426b-a16d-037899c520a4.png" height="250"><img src="https://user-images.githubusercontent.com/34834753/154859585-2c92d6d5-2ffd-4a13-8607-8115ea47e927.png" height="250">
