@@ -19,7 +19,7 @@ Once you connect to this AP it will ask for a password. The default password for
 
 <img src="https://user-images.githubusercontent.com/34834753/154843146-eecc691c-ca86-44ef-8dca-bef05d211209.jpg" height="200"><img src="https://user-images.githubusercontent.com/34834753/154844131-e8918d5d-4cb4-42f1-aad4-73d1c25d500a.jpg" height="200">
 
-When you are connected to the AP, the config portal will come up automatically. If the config portal does not show up by itself you can also browse to the following ip address: `192.168.4.1`.
+When you are connected to the AP, the config portal will come up automatically. If the config portal does not show up by itself you can also browse to the following ip address: `192.168.4.1`. The window below will be called root window in further documentation. 
 
 <img src="https://user-images.githubusercontent.com/34834753/154845040-71627d53-f507-4e9b-9150-5a361b400074.png" height="350"><img src="https://user-images.githubusercontent.com/34834753/154845044-1dfc9867-16b1-49ca-859c-7c0924e30e99.png" height="350">
 
@@ -31,7 +31,7 @@ To configure the setup/device parameters click on `Setup` in the config portal. 
 
 <img src="https://user-images.githubusercontent.com/34834753/154845447-8ca7edd1-c0db-4827-b884-2cfd29c0ca70.png" height="325"><img src="https://user-images.githubusercontent.com/34834753/154845459-f95c9adf-0ffb-49b0-837b-bc75a43cf482.png" height="325">
 
-The first three parameters are to configure your MQTT server ip, port and MQTT device id. The following two parameters are the onboard temperature sensor MQTT topic and time between temperature readings. After that you can check the box whether you'd like to use the touch button or not and set the MQTT topic after that. The last parameter is the MQTT topic for the RGB LED strip output. Once all settings are according your needs press the `Save` button to store the values. 
+The first three parameters are to configure your MQTT server ip, port and MQTT device id. The following two parameters are the onboard temperature sensor MQTT topic and time between temperature readings. After that you can check the box whether you'd like to use the touch button or not and set the MQTT topic after that. The last parameter is the MQTT topic for the RGB LED strip output. Once all settings are according your needs press the `Save` button to store the values and go back to the root window. 
 
 ### WiFi Configuration
 The last step in the config portal is to configure your WiFi network. Click `Configure WiFi` on the root page. It might take a few seconds to load the page. This is because the ESP8266 is looking for all networks that are in close proximity. In the end the following page will show up.
