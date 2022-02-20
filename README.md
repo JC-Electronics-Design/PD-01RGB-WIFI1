@@ -24,7 +24,7 @@ When you are connected to the AP, the config portal will come up automatically. 
 <img src="https://user-images.githubusercontent.com/34834753/154845040-71627d53-f507-4e9b-9150-5a361b400074.png" height="350"><img src="https://user-images.githubusercontent.com/34834753/154845044-1dfc9867-16b1-49ca-859c-7c0924e30e99.png" height="350">
 
 #### Tip: Change `Setup` parameters before configuring WiFi. 
-When configuring your WiFi settings the config portal will close after a succesful connection to the network. Therefor it is best to first configure the Setup parameters. 
+When configuring your WiFi settings the config portal will close after a successful connection to the network. Therefor it is best to first configure the Setup parameters. 
 
 ### Config Parameters
 To configure the setup/device parameters click on `Setup` in the config portal. You will be greeted with the following window.
