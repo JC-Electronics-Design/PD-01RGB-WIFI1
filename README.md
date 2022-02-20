@@ -1,4 +1,4 @@
-# PD-01RGB-WIFI1 
+# PD-01RGB-WIFI1 / IoT RGB LED Controller v2
 
 This firmware is developed to be used in combination with IoT RGB LED Controller v2, which can be ordered from my Tindie store.
 
